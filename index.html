@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>APCDS Control Center</title>
+  <meta name="description" content="Ad-hoc Passive Crowd Detection and Safety System – live crowd monitoring dashboard.">
+
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" href="/icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="APCDS">
+
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <h1>APCDS <span>Crowd Monitoring Command Center</span></h1>
+  <div class="topbar-actions">
+    <span id="status" class="pill pill-off">Starting…</span>
+    <button id="installBtn" class="btn" hidden>Install app</button>
+    <button id="settingsBtn" class="btn" aria-label="Settings">⚙ Settings</button>
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+    <section class="panel">
+      <h2>Live Camera</h2>
+      <div class="video-wrap">
+        <img id="videoFeed" class="video" alt="Live annotated camera feed" hidden>
+        <canvas id="demoFeed" class="video" width="640" height="360"></canvas>
+      </div>
+      <div id="riskBanner" class="risk-low">LOW RISK</div>
+    </section>
+
+    <section class="panel">
+      <h2>Heatmap</h2>
+      <canvas id="heatmap" width="480" height="480"></canvas>
+    </section>
+  </div>
+
+  <div class="grid">
+    <section class="panel" id="stats"></section>
+    <section class="panel" id="prediction"></section>
+  </div>
+
+  <section class="panel" id="modalities"></section>
+</main>
+
+<!-- Settings dialog -->
+<dialog id="settingsDialog">
+  <form method="dialog" id="settingsForm">
+    <h2>Settings</h2>
+
+    <label class="field">
+      <span>Data source</span>
+      <select id="modeSelect">
+        <option value="demo">Demo (simulated data)</option>
+        <option value="live">Live (APCDS backend)</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Dashboard API URL</span>
+      <input id="apiUrl" type="url" placeholder="http://127.0.0.1:8000">
+    </label>
+
+    <label class="field">
+      <span>Video feed URL</span>
+      <input id="videoUrl" type="url" placeholder="http://127.0.0.1:5002/core/video_feed">
+    </label>
+
+    <p class="hint">
+      The app is a static page — it talks directly from your browser to your own
+      backend. Browsers only allow an HTTPS site to call <code>http://localhost</code>;
+      for a backend on another machine, expose it over HTTPS (e.g. a Cloudflare Tunnel).
+    </p>
+
+    <div class="actions">
+      <button value="cancel" class="btn">Cancel</button>
+      <button value="save" id="saveSettings" class="btn btn-primary">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="/js/heatmap.js"></script>
+<script src="/js/demo.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/pwa.js"></script>
+</body>
+</html>
